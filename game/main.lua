@@ -7,6 +7,7 @@ local cards
 
 function love.load ()
   love.graphics.setFont(love.graphics.newFont(10))
+  love.graphics.setBackgroundColor(40,40,40,255)
   cards = lux.common.datafile('cards.lua', love.filesystem.load)
   ui.board.load()
   local i = 1

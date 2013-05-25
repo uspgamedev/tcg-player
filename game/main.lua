@@ -18,8 +18,13 @@ function love.load ()
   ui.board.defineZone(1,1,1,7, {80,110,150,255})
 end
 
-function love.mousepressed (x, y, button)
-  ui.board.mousePressed(x, y, button)
+function love.mousereleased (x, y, button)
+  ui.board.click(x, y, button)
+end
+
+function love.keyreleased (button)
+  local x, y = love.mouse.getPosition()
+  ui.board.keyAction(x, y, button)
 end
 
 function love.draw ()

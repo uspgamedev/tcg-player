@@ -4,7 +4,7 @@ module ('ui.board', package.seeall)
 require 'ui.slot'
 
 local slots     = {}
-local selection
+local selection = {}
 
 function load ()
   for i=1,8 do
@@ -35,24 +35,31 @@ function defineZone (i1, j1, i2, j2, color)
   end
 end
 
-function mousePressed (x, y, button)
+local function toBoardPosition (x, y)
+  return math.floor((y)/128)+1, math.floor((x)/128)+1
+end
+
+function click (x, y, button)
   if button == 'l' then
-    if x < 16 or x > 1024-16 or y < 8 or y > 768-8 then
-      return
-    end
-    i = math.floor((y)/128)+1
-    j = math.floor((x)/128)+1
+    local i, j = toBoardPosition(x,y)
     if love.keyboard.isDown 'lctrl' then
       getCard(i,j):toggleTap()
-    elseif selection then
-      local card = popCard(unpack(selection))
-      putCard(card, i, j)
-      selection = nil
     else
-      selection = {i,j}
+      slots[i][j]:click(x, y, selection)
     end
   elseif button == 'r' then
     selection = nil
+  end
+end
+
+function keyAction (x, y, key)
+  if key == 'escape' then
+    selection = {}
+    return
+  end
+  local i, j = toBoardPosition(x,y)
+  for element,_ in pairs(selection) do
+    element:keyAction(i, j, key)
   end
 end
 
@@ -65,11 +72,7 @@ function draw (graphics)
         graphics.translate(64+(j-1)*128, 64+(i-1)*128)
         graphics.setColor(slot:getColor())
         graphics.rectangle('fill', -64, -64, 128, 128)
-        if selection and i == selection[1] and j == selection[2] then
-          graphics.setColor(120,120,20,128)
-          graphics.rectangle('fill', -64, -64, 128, 128)
-        end
-        slot:draw(graphics)
+        slot:draw(graphics, selection)
         graphics.pop()
       end
     end

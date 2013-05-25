@@ -19,9 +19,21 @@ function Card:toggleTap ()
   self.tapped = not self.tapped
 end
 
-function Card:draw (graphics)
+function Card:keyAction (i, j, key)
+  if key == 't' then
+    self:tap()
+  elseif key == 'u' then
+    self:untap()
+  end
+end
+
+function Card:draw (graphics, selection)
   if self.tapped then
     graphics.rotate(math.pi/2)
+  end
+  if selection[self] then
+    graphics.setColor(100,140,180,255)
+    graphics.rectangle('fill', -36, -52, 72, 104)
   end
   graphics.setColor(90,70,50,255)
   graphics.rectangle('fill', -32, -48, 64, 96)

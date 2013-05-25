@@ -35,10 +35,20 @@ function Slot:topCard ()
   return self.stack[#self.stack]
 end
 
-function Slot:draw (graphics)
+function Slot:click (x, y, selection)
+  local topcard = self:topCard()
+  if not topcard then return end
+  if selection[topcard] then
+    selection[topcard] = nil
+  else
+    selection[topcard] = true
+  end
+end
+
+function Slot:draw (graphics, selection)
   for _,card in ipairs(self.stack) do
     graphics.push()
-    card:draw(graphics)
+    card:draw(graphics, selection)
     graphics.pop()
   end
   if #self.stack > 1 then

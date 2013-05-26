@@ -44,9 +44,14 @@ function click (x, y, button)
   if button == 'l' then
     local i, j = toBoardPosition(x,y)
     local new_selection = love.keyboard.isDown 'lshift' and selection or {}
-    slots[i][j]:click(x, y, new_selection, {i,j})
+    slots[i][j]:click(new_selection, {i,j})
     selection = new_selection
   end
+end
+
+function hover (x, y)
+  local i, j = toBoardPosition(x, y)
+  slots[i][j]:hover()
 end
 
 function keyAction (x, y, key)

@@ -27,6 +27,10 @@ function love.keyreleased (button)
   ui.board.keyAction(x, y, button)
 end
 
+function love.update (dt)
+  ui.board.hover(love.mouse.getPosition())
+end
+
 function love.draw ()
   ui.board.draw(love.graphics)
 end

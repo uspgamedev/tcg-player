@@ -51,7 +51,7 @@ function Slot:topCard ()
   return self.stack[#self.stack]
 end
 
-function Slot:click (x, y, selection, info)
+function Slot:click (selection, info)
   local topcard = self:topCard()
   if not topcard then return end
   if selection[topcard] then
@@ -61,7 +61,16 @@ function Slot:click (x, y, selection, info)
   end
 end
 
+function Slot:hover ()
+  self.focus = true
+end
+
 function Slot:draw (graphics, selection)
+  if self.focus then
+    graphics.setColor(255,100,100,255)
+    graphics.rectangle('line', -64, -64, 128, 127)
+    self.focus = false
+  end
   for _,card in ipairs(self.stack) do
     graphics.push()
     card:draw(graphics, self.hidden, selection)

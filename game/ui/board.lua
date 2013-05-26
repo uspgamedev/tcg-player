@@ -27,11 +27,11 @@ function popCard (i, j)
   return slots[i][j]:popCard()
 end
 
-function defineZone (i1, j1, i2, j2, color)
+function defineZone (i1, j1, i2, j2, color, hidden)
   for i=i1,i2 do
     for j=j1,j2 do
       slots[i][j]:setColor(color)
-      slots[i][j]:setHidden(true)
+      slots[i][j]:setHidden(hidden)
     end
   end
 end

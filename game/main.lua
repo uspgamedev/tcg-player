@@ -21,6 +21,8 @@ function love.load ()
   ui.board.defineZone(4,2,5,7, {40,80,55,255})
   ui.board.defineZone(1,8,1,8, {40,40,55,255}, true)
   ui.board.defineZone(6,1,6,1, {40,40,55,255}, true)
+  ui.board.defineZone(2,1,5,1, {110,100,55,255})
+  ui.board.defineZone(2,8,5,8, {110,100,55,255})
 end
 
 function love.mousereleased (x, y, button)

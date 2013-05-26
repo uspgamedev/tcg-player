@@ -2,10 +2,12 @@
 module ('ui.board', package.seeall)
 
 require 'ui.slot'
+require 'ui.common'
 require 'data.cards'
 
 local slots     = {}
 local selection = {}
+local show      = nil
 
 local function shuffleDeck (cards, i, j)
   local slot = slots[i][j]
@@ -69,7 +71,12 @@ end
 
 function hover (x, y)
   local i, j = toBoardPosition(x, y)
-  slots[i][j]:hover()
+  local slot = slots[i][j]
+  slot:hover()
+  if love.mouse.isDown 'r' then
+    local topcard = slot:topCard()
+    if topcard then show = topcard:getInfo() end
+  end
 end
 
 function keyAction (x, y, key)
@@ -102,5 +109,9 @@ function draw (graphics)
         graphics.pop()
       end
     end
+  end
+  if show then
+    ui.common.infoBox(graphics, 512-128, 384-128, 256, 256, show)
+    show = nil
   end
 end

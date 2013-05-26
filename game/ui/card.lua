@@ -19,6 +19,10 @@ function Card:toggleTap ()
   self.tapped = not self.tapped
 end
 
+function Card:getInfo ()
+  return self.info
+end
+
 function Card:keyAction (i, j, key)
   if key == 't' then
     self:tap()

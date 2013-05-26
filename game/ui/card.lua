@@ -32,7 +32,7 @@ function Card:draw (graphics, selection)
     graphics.rotate(math.pi/2)
   end
   if selection[self] then
-    graphics.setColor(100,140,180,255)
+    graphics.setColor(100,180,140,255)
     graphics.rectangle('fill', -36, -52, 72, 104)
   end
   graphics.setColor(90,70,50,255)

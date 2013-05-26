@@ -42,7 +42,9 @@ end
 function click (x, y, button)
   if button == 'l' then
     local i, j = toBoardPosition(x,y)
-    slots[i][j]:click(x, y, selection, {i,j})
+    local new_selection = love.keyboard.isDown 'lshift' and selection or {}
+    slots[i][j]:click(x, y, new_selection, {i,j})
+    selection = new_selection
   end
 end
 
@@ -55,6 +57,7 @@ function keyAction (x, y, key)
       slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
       selection[element] = {i,j}
     end
+    selection = {}
   else
     for element,_ in pairs(selection) do
       element:keyAction(i, j, key)

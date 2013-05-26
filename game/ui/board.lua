@@ -31,7 +31,7 @@ function load (deck1)
       slots[i][j] = ui.Slot:new{}
     end
   end
-  putCard(data.cards.make(deck1.vessel), 5, 1)
+  putCard(data.cards.make(deck1.vessel), 4, 1)
   shuffleDeck(deck1.cards, 6, 1)
 end
 
@@ -73,7 +73,7 @@ function hover (x, y)
   local i, j = toBoardPosition(x, y)
   local slot = slots[i][j]
   slot:hover()
-  if love.mouse.isDown 'r' then
+  if love.mouse.isDown 'r' and not slot.hidden then
     local topcard = slot:topCard()
     if topcard then show = topcard:getInfo() end
   end
@@ -111,7 +111,7 @@ function draw (graphics)
     end
   end
   if show then
-    ui.common.infoBox(graphics, 512-128, 384-128, 256, 256, show)
+    ui.common.infoBox(graphics, 512-96, 384-128, 96*2, 256, show)
     show = nil
   end
 end

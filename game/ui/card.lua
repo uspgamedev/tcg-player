@@ -21,11 +21,12 @@ end
 
 function Card:getInfo ()
   return {
-    {'center', self.info.name},
     {
       'right',
       "{"..(self.info.cost or '').."} -- ["..(self.info.size or '').."]"
     },
+    {'center', self.info.name},
+    {'center', self.info.type}
   }
 end
 

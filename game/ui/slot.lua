@@ -31,17 +31,28 @@ function Slot:popCard ()
   return table.remove(self.stack)
 end
 
+function Slot:removeCard (card)
+  local index
+  for i,stacked in ipairs(self.stack) do
+    if stacked == card then
+      index = i
+      break
+    end
+  end
+  return table.remove(self.stack, index)
+end
+
 function Slot:topCard ()
   return self.stack[#self.stack]
 end
 
-function Slot:click (x, y, selection)
+function Slot:click (x, y, selection, info)
   local topcard = self:topCard()
   if not topcard then return end
   if selection[topcard] then
     selection[topcard] = nil
   else
-    selection[topcard] = true
+    selection[topcard] = info
   end
 end
 

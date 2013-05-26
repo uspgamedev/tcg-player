@@ -42,24 +42,23 @@ end
 function click (x, y, button)
   if button == 'l' then
     local i, j = toBoardPosition(x,y)
-    if love.keyboard.isDown 'lctrl' then
-      getCard(i,j):toggleTap()
-    else
-      slots[i][j]:click(x, y, selection)
-    end
-  elseif button == 'r' then
-    selection = nil
+    slots[i][j]:click(x, y, selection, {i,j})
   end
 end
 
 function keyAction (x, y, key)
+  local i, j = toBoardPosition(x,y)
   if key == 'escape' then
     selection = {}
-    return
-  end
-  local i, j = toBoardPosition(x,y)
-  for element,_ in pairs(selection) do
-    element:keyAction(i, j, key)
+  elseif key == ' ' then
+    for element,info in pairs(selection) do
+      slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
+      selection[element] = {i,j}
+    end
+  else
+    for element,_ in pairs(selection) do
+      element:keyAction(i, j, key)
+    end
   end
 end
 

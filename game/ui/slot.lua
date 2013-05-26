@@ -6,8 +6,9 @@ require 'lux.object'
 Slot = lux.object.new {}
 
 Slot.__init = {
-  color = {0,0,0,0},
-  stack = {}
+  color   = {0,0,0,0},
+  stack   = {},
+  hidden  = false
 }
 
 function Slot:getColor ()
@@ -21,6 +22,10 @@ function Slot:setColor (...)
   else
     self.color = { ... }
   end
+end
+
+function Slot:setHidden (flag)
+  self.hidden = flag
 end
 
 function Slot:pushCard (card)
@@ -59,7 +64,7 @@ end
 function Slot:draw (graphics, selection)
   for _,card in ipairs(self.stack) do
     graphics.push()
-    card:draw(graphics, selection)
+    card:draw(graphics, self.hidden, selection)
     graphics.pop()
   end
   if #self.stack > 1 then

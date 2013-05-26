@@ -31,6 +31,7 @@ function defineZone (i1, j1, i2, j2, color)
   for i=i1,i2 do
     for j=j1,j2 do
       slots[i][j]:setColor(color)
+      slots[i][j]:setHidden(true)
     end
   end
 end

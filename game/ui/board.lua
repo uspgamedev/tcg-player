@@ -16,7 +16,8 @@ local function shuffleDeck (cards, i, j)
     end
   end
   for i=1,#cardpool do
-    local card = data.cards.make(table.remove(cardpool, math.random(1,#cardpool)))
+    local card =
+      data.cards.make(table.remove(cardpool, math.random(1,#cardpool)))
     slot:pushCard(card)
   end
 end

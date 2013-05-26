@@ -20,14 +20,21 @@ function Card:toggleTap ()
 end
 
 function Card:getInfo ()
-  return {
+  local info = {
     {
       'right',
       "{"..(self.info.cost or '').."} -- ["..(self.info.size or '').."]"
     },
     {'center', self.info.name},
-    {'center', self.info.type}
+    {'center', "----------------------"},
+    {'center', "("..self.info.type..")"},
+    {'center', "----------------------"},
+    {'center', ""},
   }
+  for _,rule in ipairs(self.info.rules) do
+    table.insert(info, {'left', rule})
+  end
+  return info
 end
 
 function Card:keyAction (i, j, key)

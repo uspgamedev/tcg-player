@@ -4,7 +4,9 @@ _1 = {
   cost = 2,
   type = 'unit',
   size = 2,
-  ranged = 1
+  rules = {
+    "Ranged 1."
+  }
 }
 
 _2 = {
@@ -12,7 +14,9 @@ _2 = {
   cost = 2,
   type = 'unit',
   size = 1,
-  melee = 2
+  rules = {
+    "Melee 2."
+  }
 }
 
 _3 = {
@@ -20,7 +24,9 @@ _3 = {
   cost = 1,
   type = 'unit',
   size = 1,
-  assault = 1
+  rules = {
+    "Assault 1."
+  }
 }
 
 _4 = {
@@ -52,5 +58,6 @@ _6 = {
 
 _7 = {
   name = "Witty Airship",
-  type = 'vessel'
+  type = 'vessel',
+  rules = {}
 }

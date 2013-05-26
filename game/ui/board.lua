@@ -2,17 +2,19 @@
 module ('ui.board', package.seeall)
 
 require 'ui.slot'
+require 'data.cards'
 
 local slots     = {}
 local selection = {}
 
-function load ()
+function load (deck1)
   for i=1,8 do
     slots[i] = {}
     for j=1,8 do
       slots[i][j] = ui.Slot:new{}
     end
   end
+  putCard(data.cards.make(deck1.vessel), 5, 1)
 end
 
 function putCard (card, i, j)

@@ -20,7 +20,13 @@ function Card:toggleTap ()
 end
 
 function Card:getInfo ()
-  return self.info
+  return {
+    {'center', self.info.name},
+    {
+      'right',
+      "{"..(self.info.cost or '').."} -- ["..(self.info.size or '').."]"
+    },
+  }
 end
 
 function Card:keyAction (i, j, key)

@@ -7,6 +7,20 @@ require 'data.cards'
 local slots     = {}
 local selection = {}
 
+local function shuffleDeck (cards, i, j)
+  local slot = slots[i][j]
+  local cardpool = {}
+  for _,entry in ipairs(cards) do
+    for i=1,entry[1] do
+      table.insert(cardpool, entry[2])
+    end
+  end
+  for i=1,#cardpool do
+    local card = data.cards.make(table.remove(cardpool, math.random(1,#cardpool)))
+    slot:pushCard(card)
+  end
+end
+
 function load (deck1)
   for i=1,8 do
     slots[i] = {}
@@ -15,6 +29,7 @@ function load (deck1)
     end
   end
   putCard(data.cards.make(deck1.vessel), 5, 1)
+  shuffleDeck(deck1.cards, 6, 1)
 end
 
 function putCard (card, i, j)

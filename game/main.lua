@@ -1,12 +1,14 @@
 
 require 'ui.board'
 require 'data.cards'
+require 'lux.common'
 
 function love.load ()
   love.graphics.setFont(love.graphics.newFont(10))
   love.graphics.setBackgroundColor(40,40,40,255)
   data.cards.load 'cards.lua'
-  ui.board.load { vessel = "Almighty Turret" }
+  local decks = lux.common.datafile('decks.lua', love.filesystem.load)
+  ui.board.load(decks.player1)
   ui.board.defineZone(1,1,1,7, {50,50,110,255})
   ui.board.defineZone(6,2,6,8, {50,50,110,255})
   ui.board.defineZone(2,1,3,7, {90,55,40,255})

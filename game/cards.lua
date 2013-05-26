@@ -49,3 +49,8 @@ _6 = {
     "Target player discards 2 cards."
   }
 }
+
+_7 = {
+  name = "Witty Airship",
+  type = 'vessel'
+}

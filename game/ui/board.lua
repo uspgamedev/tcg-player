@@ -8,6 +8,7 @@ require 'data.cards'
 local slots     = {}
 local selection = {}
 local show      = nil
+local stats     = false
 
 local function shuffleDeck (cards, i, j)
   local slot = slots[i][j]
@@ -96,6 +97,10 @@ function keyAction (x, y, key)
   end
 end
 
+function showStats ()
+  stats = true
+end
+
 function draw (graphics)
   for i=1,8 do
     for j=1,8 do
@@ -110,7 +115,15 @@ function draw (graphics)
       end
     end
   end
-  if show then
+  if stats then
+    ui.common.infoBox(graphics, 512-96, 384-48, 96*2, 96, {
+      {'center', "Player 1's Wreckage:"},
+      {'center', slots[5][1]:totalSize().."/20"},
+      {'center', "Player 2's Wreckage:"},
+      {'center', slots[2][8]:totalSize().."/20"}
+    })
+    stats = false
+  elseif show then
     ui.common.infoBox(graphics, 512-96, 384-128, 96*2, 256, show)
     show = nil
   end

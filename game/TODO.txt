@@ -1,5 +1,4 @@
 
-- Mouse Right Button => Show card stats and rules
 - Move cards to bottom of slot stack
 - CARDS
 - DECKS

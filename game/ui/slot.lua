@@ -28,6 +28,14 @@ function Slot:setHidden (flag)
   self.hidden = flag
 end
 
+function Slot:totalSize ()
+  local total = 0
+  for _,card in ipairs(self.stack) do
+    total = total + (card.info.size or 0)
+  end
+  return total
+end
+
 function Slot:pushCard (card)
   return table.insert(self.stack, card)
 end

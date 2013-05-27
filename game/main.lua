@@ -23,13 +23,16 @@ function love.mousereleased (x, y, button)
   ui.board.click(x, y, button)
 end
 
-function love.keyreleased (button)
+function love.keypressed (button)
   local x, y = love.mouse.getPosition()
   ui.board.keyAction(x, y, button)
 end
 
 function love.update (dt)
   ui.board.hover(love.mouse.getPosition())
+  if love.keyboard.isDown 'tab' then
+    ui.board.showStats()
+  end
 end
 
 function love.draw ()

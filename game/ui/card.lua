@@ -59,6 +59,6 @@ function Card:draw (graphics, hidden, selection)
   graphics.rectangle('line', -32, -48, 64, 96)
   graphics.setColor(100,140,180,255)
   if not hidden and self.info then
-    graphics.printf(self.info.name, -28, -40, 64-8, 'center')
+    graphics.printf(self.info.name, -32+2, -48+2, 64-4, 'center')
   end
 end

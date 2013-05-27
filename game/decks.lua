@@ -1,8 +1,11 @@
 
 player1 = {
-  vessel = "Witty Airship",
+  vessel = "Airship",
   cards = {
-    {4, "Almighty Turret"},
-    {4, "Shot Volley"}
+    {4, "Turret"},
+    {4, "Volley"},
+    {4, "Divert"},
+    {4, "Cloyster"},
+    {4, "Cannon"}
   }
 }

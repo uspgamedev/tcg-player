@@ -1,6 +1,6 @@
 
 _1 = {
-  name = "Almighty Turret",
+  name = "Turret",
   cost = 2,
   type = 'unit',
   size = 2,
@@ -10,7 +10,7 @@ _1 = {
 }
 
 _2 = {
-  name = "Beast Claw",
+  name = "Fang",
   cost = 2,
   type = 'unit',
   size = 1,
@@ -20,7 +20,7 @@ _2 = {
 }
 
 _3 = {
-  name = "Guerrila Rider",
+  name = "Scout",
   cost = 1,
   type = 'unit',
   size = 1,
@@ -30,11 +30,11 @@ _3 = {
 }
 
 _4 = {
-  name = "Shot Volley",
+  name = "Volley",
   cost = 1,
   type = 'command',
   rules = {
-    "Shot Volley causes 3 damage to target player."
+    "Volley delas 3 damage to target player."
   }
 }
 
@@ -48,7 +48,7 @@ _5 = {
 }
 
 _6 = {
-  name = "Destroy the Provisions",
+  name = "Backstab",
   cost = 1,
   type = 'command',
   rules = {
@@ -57,7 +57,40 @@ _6 = {
 }
 
 _7 = {
-  name = "Witty Airship",
+  name = "Airship",
   type = 'vessel',
   rules = {}
+}
+
+_8 = {
+  name = "Divert",
+  cost = 2,
+  type = "maneuver",
+  rules = {
+    "Target player cannot untap units."
+  }
+}
+
+_9 = {
+  name = "Cloyster",
+  cost = 3,
+  type = 'unit',
+  size = 3,
+  rules = {
+    "Shield 3.",
+    "Sacrifice Cloyster: Cloyster deals 3 damage to target unit."
+  },
+  flavor = "If it is useless, just throw it at them."
+}
+
+_10 = {
+  name = "Cannon",
+  cost = 3,
+  type = 'unit',
+  size = 4,
+  rules = {
+    "Ranged 3.",
+    "{2}: Cannon gets Ranged +1."
+  },
+  flavor = "One can always load more into the canon."
 }

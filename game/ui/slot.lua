@@ -79,16 +79,18 @@ function Slot:draw (graphics, selection)
     graphics.rectangle('line', -64, -64, 128, 127)
     self.focus = false
   end
-  for _,card in ipairs(self.stack) do
+  for i,card in ipairs(self.stack) do
     graphics.push()
+    local d = math.min(#self.stack-i-1, 2)
+    graphics.translate(d*5, d*5)
     card:draw(graphics, self.hidden, selection)
     graphics.pop()
   end
   if #self.stack > 1 then
     graphics.printf(
       #self.stack,
-      -48, 64-2*graphics.getFont():getHeight(),
-      96,
+      -60, 64-2*graphics.getFont():getHeight(),
+      120,
       'right'
     )
   end

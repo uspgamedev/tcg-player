@@ -80,16 +80,35 @@ function hover (x, y)
   end
 end
 
+function drawCard ()
+  local deckslot  = slots[6][1]
+  local drawncard = deckslot:popCard()
+  if drawncard then
+    for i=1,7 do
+      local handslot = slots[6][1+i]
+      if not handslot:topCard() then
+        handslot:pushCard(drawncard)
+        return
+      end
+    end
+    deckslot:pushCard(drawncard)
+  end
+end
+
 function keyAction (x, y, key)
   local i, j = toBoardPosition(x,y)
   if key == 'escape' then
     selection = {}
-  elseif key == ' ' then
+  elseif key == ' ' then -- move card
     for element,info in pairs(selection) do
       slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
       selection[element] = {i,j}
     end
     selection = {}
+  elseif  key == 'd' then -- draw card(s)
+    for i=1,(love.keyboard.isDown'lshift' and 7 or 1) do
+      drawCard()
+    end
   else
     for element,_ in pairs(selection) do
       element:keyAction(i, j, key)

@@ -54,7 +54,7 @@ function Card:draw (graphics, hidden, selection)
   if selection[self] then
     graphics.setColor(100,180,140,255)
   else
-    graphics.setColor(255,255,255,255)
+    graphics.setColor(0,0,0,255)
   end
   graphics.rectangle('line', -32, -48, 64, 96)
   graphics.setColor(100,140,180,255)

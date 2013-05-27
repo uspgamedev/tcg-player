@@ -5,11 +5,15 @@ require 'lux.common'
 require 'ui.card'
 
 local cardsinfo = {}
+local editions = {}
 
 function load (cardfile)
-  local cards = lux.common.datafile(cardfile, love.filesystem.load)
-  for _,cardinfo in pairs(cards) do
-    cardsinfo[cardinfo.name] = cardinfo
+  local cardsdata = lux.common.datafile(cardfile, love.filesystem.load)
+  for _,editioninfo in pairs(cardsdata) do
+    table.insert(editions, editioninfo)
+    for _,cardinfo in ipairs(editioninfo) do
+      cardsinfo[cardinfo.name] = cardinfo
+    end
   end
 end
 

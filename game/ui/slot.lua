@@ -76,7 +76,7 @@ end
 function Slot:draw (graphics, selection)
   if self.focus then
     graphics.setColor(255,100,100,255)
-    graphics.rectangle('line', -64, -64, 128, 127)
+    graphics.rectangle('line', -64, -64, 127, 127)
     self.focus = false
   end
   for i,card in ipairs(self.stack) do

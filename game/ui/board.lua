@@ -96,15 +96,19 @@ function drawCard ()
   end
 end
 
+function moveSelectedCards (i, j)
+  for element,info in pairs(selection) do
+    slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
+    selection[element] = {i,j}
+  end
+end
+
 function keyAction (x, y, key)
   local i, j = toBoardPosition(x,y)
   if key == 'escape' then
     selection = {}
   elseif key == ' ' then -- move card
-    for element,info in pairs(selection) do
-      slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
-      selection[element] = {i,j}
-    end
+    moveSelectedCards(i, j)
     selection = {}
   elseif  key == 'd' then -- draw card(s)
     for i=1,(love.keyboard.isDown'lshift' and 7 or 1) do
@@ -146,11 +150,11 @@ function draw (graphics)
   elseif show then
     local w = 96
     local n = show:getQuantity()
-    local x0 = 512-n*(w+2)
+    local x0 = 512+n*(w)
     for i,card in show:cards() do
       ui.common.infoBox(
         graphics,
-        x0+(i-1)*2*(w+1)+1, 384-128,
+        x0-2*w-(i-1)*2*(w+1)-1, 384-128,
         w*2, 256,
         card:getInfo()
       )

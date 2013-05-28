@@ -1,4 +1,5 @@
 
+- Show info of all stacked cards.
 - Move cards to bottom of slot stack
 - CARDS
 - DECKS

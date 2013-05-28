@@ -40,6 +40,10 @@ function Slot:pushCard (card)
   return table.insert(self.stack, card)
 end
 
+function Slot:insertCard (card, pos)
+  return table.insert(self.stack, pos or 1, card)
+end
+
 function Slot:popCard ()
   return table.remove(self.stack)
 end

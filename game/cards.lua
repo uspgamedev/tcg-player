@@ -32,7 +32,7 @@ alfa_00_04 = {
     cost = 1,
     type = 'command',
     rules = {
-      "Volley delas 3 damage to target player."
+      "Volley deals 3 damage to target player."
     }
   },
   {

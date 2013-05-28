@@ -96,9 +96,13 @@ function drawCard ()
   end
 end
 
-function moveSelectedCards (i, j)
+function moveSelectedCards (i, j, pos)
   for element,info in pairs(selection) do
-    slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
+    if not pos then
+      slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
+    else
+      slots[i][j]:insertCard(slots[info[1]][info[2]]:removeCard(element), pos)
+    end
     selection[element] = {i,j}
   end
 end
@@ -114,6 +118,12 @@ function keyAction (x, y, key)
     for i=1,(love.keyboard.isDown'lshift' and 7 or 1) do
       drawCard()
     end
+  elseif key == 'x' then
+    moveSelectedCards(5,1)
+    selection = {}
+  elseif key == 'c' then
+    moveSelectedCards(6,1,1)
+    selection = {}
   else
     for element,_ in pairs(selection) do
       element:keyAction(i, j, key)

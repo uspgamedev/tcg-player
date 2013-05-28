@@ -27,7 +27,7 @@ function Card:getInfo ()
     },
     {'center', self.info.name},
     {'center', "----------------------"},
-    {'center', "("..self.info.type..")"},
+    {'center', "("..self.info.type..(self.tapped and " - tapped" or "")..")"},
     {'center', "----------------------"},
     {'center', ""},
   }

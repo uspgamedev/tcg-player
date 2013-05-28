@@ -59,6 +59,14 @@ function Slot:topCard ()
   return self.stack[#self.stack]
 end
 
+function Slot:getQuantity ()
+  return #self.stack
+end
+
+function Slot:cards ()
+  return ipairs(self.stack)
+end
+
 function Slot:click (selection, info)
   local topcard = self:topCard()
   if not topcard then return end

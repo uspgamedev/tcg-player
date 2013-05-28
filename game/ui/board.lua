@@ -75,8 +75,9 @@ function hover (x, y)
   local slot = slots[i][j]
   slot:hover()
   if love.mouse.isDown 'r' and not slot.hidden then
-    local topcard = slot:topCard()
-    if topcard then show = topcard:getInfo() end
+    show = slot
+    --local topcard = slot:topCard()
+    --if topcard then show = topcard:getInfo() end
   end
 end
 
@@ -143,7 +144,17 @@ function draw (graphics)
     })
     stats = false
   elseif show then
-    ui.common.infoBox(graphics, 512-96, 384-128, 96*2, 256, show)
+    local w = 96
+    local n = show:getQuantity()
+    local x0 = 512-n*(w+2)
+    for i,card in show:cards() do
+      ui.common.infoBox(
+        graphics,
+        x0+(i-1)*2*(w+1)+1, 384-128,
+        w*2, 256,
+        card:getInfo()
+      )
+    end
     show = nil
   end
 end

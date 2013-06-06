@@ -85,5 +85,16 @@ alfa_00_04 = {
       "{2}: Cannon gets Ranged +1."
     },
     flavor = "One can always load more into the canon."
+  },
+  {
+    name = "Resouding Blaster",
+    cost = 7,
+    type = 'unit',
+    size = 6,
+    rules = {
+      "Ranged 4.",
+      "Whenever you play a Command card, target player destroys the top card "..
+      "of his deck."
+    }
   }
 }

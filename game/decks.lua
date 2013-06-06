@@ -6,6 +6,7 @@ player1 = {
     {4, "Volley"},
     {4, "Divert"},
     {4, "Cloyster"},
-    {4, "Cannon"}
+    {4, "Cannon"},
+    {2, "Resouding Blaster"}
   }
 }

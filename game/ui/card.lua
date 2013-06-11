@@ -1,15 +1,16 @@
 
 module ('ui', package.seeall)
 
+require 'control.card'
 require 'lux.object'
 
 Card = lux.object.new {}
 
 function Card.keyAction (key, reference)
   if key == 't' then
-    reference:tap()
+    control.card.tapCard(reference)
   elseif key == 'u' then
-    reference:untap()
+    control.card.untapCard(reference)
   end
 end
 

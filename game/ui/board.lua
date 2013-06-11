@@ -1,6 +1,7 @@
 
 module ('ui.board', package.seeall)
 
+require 'control.board'
 require 'model.board'
 require 'ui.slot'
 require 'ui.card'
@@ -59,17 +60,19 @@ function keyAction (x, y, key)
   if key == 'escape' then
     selection = {}
   elseif key == ' ' then -- move card
-    model.board.moveSelectedCards(selection, i, j)
+    control.board.moveSelectedCards(selection, i, j)
     selection = {}
   elseif  key == 'd' then -- draw card(s)
-    for i=1,(love.keyboard.isDown'lshift' and 7 or 1) do
-      model.board.drawCard()
+    if love.keyboard.isDown'lshift' then
+      control.board.drawHand()
+    else
+      control.board.drawCard()
     end
   elseif key == 'x' then
-    model.board.moveSelectedCards(selection, 5, 1)
+    control.board.destroySelectedCards(selection)
     selection = {}
   elseif key == 'c' then
-    model.board.moveSelectedCards(selection, 6, 1, 1)
+    control.board.consumeSelectedCards(selection)
     selection = {}
   else
     for element,_ in pairs(selection) do

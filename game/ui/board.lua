@@ -106,9 +106,9 @@ function draw (graphics)
     stats = false
   elseif show then
     local w = 96
-    local n = show:getQuantity()
+    local n = show.reference:getQuantity()
     local x0 = 512+n*(w)
-    for i,card in show:cards() do
+    for i,card in show.reference:cards() do
       ui.common.infoBox(
         graphics,
         x0-2*w-(i-1)*2*(w+1)-1, 384-128,

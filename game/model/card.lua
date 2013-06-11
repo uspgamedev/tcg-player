@@ -1,5 +1,5 @@
 
-module ('ui', package.seeall)
+module ('model', package.seeall)
 
 require 'lux.object'
 
@@ -36,30 +36,4 @@ function Card:getInfo ()
     table.insert(info, {'left', rule})
   end
   return info
-end
-
-function Card:keyAction (i, j, key)
-  if key == 't' then
-    self:tap()
-  elseif key == 'u' then
-    self:untap()
-  end
-end
-
-function Card:draw (graphics, hidden, selection)
-  if self.tapped then
-    graphics.rotate(math.pi/2)
-  end
-  graphics.setColor(90,70,50,255)
-  graphics.rectangle('fill', -32, -48, 64, 96)
-  if selection[self] then
-    graphics.setColor(100,180,140,255)
-  else
-    graphics.setColor(0,0,0,255)
-  end
-  graphics.rectangle('line', -32, -48, 64, 96)
-  graphics.setColor(100,140,180,255)
-  if not hidden and self.info then
-    graphics.printf(self.info.name, -32+2, -48+2, 64-4, 'center')
-  end
 end

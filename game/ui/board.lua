@@ -76,8 +76,6 @@ function hover (x, y)
   slot:hover()
   if love.mouse.isDown 'r' and not slot.hidden then
     show = slot
-    --local topcard = slot:topCard()
-    --if topcard then show = topcard:getInfo() end
   end
 end
 

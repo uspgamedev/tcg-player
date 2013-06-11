@@ -1,0 +1,53 @@
+
+module ('model', package.seeall)
+
+require 'lux.object'
+
+Slot = lux.object.new {}
+
+Slot.__init = {
+  stack = {}
+}
+
+function Slot:totalSize ()
+  local total = 0
+  for _,card in ipairs(self.stack) do
+    total = total + (card.info.size or 0)
+  end
+  return total
+end
+
+function Slot:pushCard (card)
+  return table.insert(self.stack, card)
+end
+
+function Slot:insertCard (card, pos)
+  return table.insert(self.stack, pos or 1, card)
+end
+
+function Slot:popCard ()
+  return table.remove(self.stack)
+end
+
+function Slot:removeCard (card)
+  local index
+  for i,stacked in ipairs(self.stack) do
+    if stacked == card then
+      index = i
+      break
+    end
+  end
+  return table.remove(self.stack, index)
+end
+
+function Slot:topCard ()
+  return self.stack[#self.stack]
+end
+
+function Slot:getQuantity ()
+  return #self.stack
+end
+
+function Slot:cards ()
+  return ipairs(self.stack)
+end

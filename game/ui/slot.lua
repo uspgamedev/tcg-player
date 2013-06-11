@@ -1,14 +1,15 @@
 
 module ('ui', package.seeall)
 
+require 'ui.card'
 require 'lux.object'
 
 Slot = lux.object.new {}
 
 Slot.__init = {
-  color   = {0,0,0,0},
-  stack   = {},
-  hidden  = false
+  color     = {0,0,0,0},
+  hidden    = false,
+  reference = nil
 }
 
 function Slot:getColor ()
@@ -28,51 +29,8 @@ function Slot:setHidden (flag)
   self.hidden = flag
 end
 
-function Slot:totalSize ()
-  local total = 0
-  for _,card in ipairs(self.stack) do
-    total = total + (card.info.size or 0)
-  end
-  return total
-end
-
-function Slot:pushCard (card)
-  return table.insert(self.stack, card)
-end
-
-function Slot:insertCard (card, pos)
-  return table.insert(self.stack, pos or 1, card)
-end
-
-function Slot:popCard ()
-  return table.remove(self.stack)
-end
-
-function Slot:removeCard (card)
-  local index
-  for i,stacked in ipairs(self.stack) do
-    if stacked == card then
-      index = i
-      break
-    end
-  end
-  return table.remove(self.stack, index)
-end
-
-function Slot:topCard ()
-  return self.stack[#self.stack]
-end
-
-function Slot:getQuantity ()
-  return #self.stack
-end
-
-function Slot:cards ()
-  return ipairs(self.stack)
-end
-
 function Slot:click (selection, info)
-  local topcard = self:topCard()
+  local topcard = self.reference:topCard()
   if not topcard then return end
   if selection[topcard] then
     selection[topcard] = nil
@@ -91,16 +49,16 @@ function Slot:draw (graphics, selection)
     graphics.rectangle('line', -64, -64, 127, 127)
     self.focus = false
   end
-  for i,card in ipairs(self.stack) do
+  for i,card in self.reference:cards() do
     graphics.push()
-    local d = math.min(#self.stack-i-1, 2)
+    local d = math.min(#self.reference.stack-i-1, 2)
     graphics.translate(d*5, d*5)
-    card:draw(graphics, self.hidden, selection)
+    ui.Card.draw(graphics, self.hidden, selection, card)
     graphics.pop()
   end
-  if #self.stack > 1 then
+  if #self.reference.stack > 1 then
     graphics.printf(
-      #self.stack,
+      #self.reference.stack,
       -60, 64-2*graphics.getFont():getHeight(),
       120,
       'right'

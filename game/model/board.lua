@@ -5,9 +5,6 @@ require 'model.slot'
 require 'data.cards'
 
 local slots     = {}
-local selection = {}
-local show      = nil
-local stats     = false
 
 local function shuffleDeck (cards, i, j)
   local slot = slots[i][j]
@@ -28,11 +25,15 @@ function load (deck1)
   for i=1,8 do
     slots[i] = {}
     for j=1,8 do
-      slots[i][j] = ui.Slot:new{}
+      slots[i][j] = model.Slot:new{}
     end
   end
   putCard(data.cards.make(deck1.vessel), 4, 1)
   shuffleDeck(deck1.cards, 6, 1)
+end
+
+function getSlot (i, j)
+  return slots[i][j]
 end
 
 function putCard (card, i, j)
@@ -62,13 +63,12 @@ function drawCard ()
   end
 end
 
-function moveSelectedCards (i, j, pos)
+function moveSelectedCards (selection, i, j, pos)
   for element,info in pairs(selection) do
     if not pos then
       slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
     else
       slots[i][j]:insertCard(slots[info[1]][info[2]]:removeCard(element), pos)
     end
-    selection[element] = {i,j}
   end
 end

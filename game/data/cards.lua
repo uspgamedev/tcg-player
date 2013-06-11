@@ -2,7 +2,7 @@
 module ('data.cards', package.seeall)
 
 require 'lux.common'
-require 'ui.card'
+require 'model.card'
 
 local cardsinfo = {}
 local editions = {}
@@ -18,5 +18,5 @@ function load (cardfile)
 end
 
 function make (name)
-  return ui.Card:new{ info = cardsinfo[name] }
+  return model.Card:new{ info = cardsinfo[name] }
 end

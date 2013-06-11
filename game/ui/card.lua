@@ -3,63 +3,30 @@ module ('ui', package.seeall)
 
 require 'lux.object'
 
-Card = lux.object.new {
-  tapped = false,
-  info = nil
-}
+Card = lux.object.new {}
 
-function Card:tap ()
-  self.tapped = true
-end
-
-function Card:untap ()
-  self.tapped = false
-end
-
-function Card:toggleTap ()
-  self.tapped = not self.tapped
-end
-
-function Card:getInfo ()
-  local info = {
-    {
-      'right',
-      "{"..(self.info.cost or '').."} -- ["..(self.info.size or '').."]"
-    },
-    {'center', self.info.name},
-    {'center', "----------------------"},
-    {'center', "("..self.info.type..(self.tapped and " - tapped" or "")..")"},
-    {'center', "----------------------"},
-    {'center', ""},
-  }
-  for _,rule in ipairs(self.info.rules) do
-    table.insert(info, {'left', rule})
-  end
-  return info
-end
-
-function Card:keyAction (i, j, key)
+function Card.keyAction (key, reference)
   if key == 't' then
-    self:tap()
+    reference:tap()
   elseif key == 'u' then
-    self:untap()
+    reference:untap()
   end
 end
 
-function Card:draw (graphics, hidden, selection)
-  if self.tapped then
+function Card.draw (graphics, hidden, selection, reference)
+  if reference.tapped then
     graphics.rotate(math.pi/2)
   end
   graphics.setColor(90,70,50,255)
   graphics.rectangle('fill', -32, -48, 64, 96)
-  if selection[self] then
+  if selection[reference] then
     graphics.setColor(100,180,140,255)
   else
     graphics.setColor(0,0,0,255)
   end
   graphics.rectangle('line', -32, -48, 64, 96)
   graphics.setColor(100,140,180,255)
-  if not hidden and self.info then
-    graphics.printf(self.info.name, -32+2, -48+2, 64-4, 'center')
+  if not hidden and reference.info then
+    graphics.printf(reference.info.name, -32+2, -48+2, 64-4, 'center')
   end
 end

@@ -1,7 +1,9 @@
 
 module ('ui.board', package.seeall)
 
+require 'model.board'
 require 'ui.slot'
+require 'ui.card'
 require 'ui.common'
 require 'data.cards'
 
@@ -10,42 +12,15 @@ local selection = {}
 local show      = nil
 local stats     = false
 
-local function shuffleDeck (cards, i, j)
-  local slot = slots[i][j]
-  local cardpool = {}
-  for _,entry in ipairs(cards) do
-    for i=1,entry[1] do
-      table.insert(cardpool, entry[2])
-    end
-  end
-  for i=1,#cardpool do
-    local card =
-      data.cards.make(table.remove(cardpool, math.random(1,#cardpool)))
-    slot:pushCard(card)
-  end
-end
-
-function load (deck1)
+function load ()
   for i=1,8 do
     slots[i] = {}
     for j=1,8 do
-      slots[i][j] = ui.Slot:new{}
+      slots[i][j] = ui.Slot:new{
+        reference = model.board.getSlot(i,j)
+      }
     end
   end
-  putCard(data.cards.make(deck1.vessel), 4, 1)
-  shuffleDeck(deck1.cards, 6, 1)
-end
-
-function putCard (card, i, j)
-  return slots[i][j]:pushCard(card)
-end
-
-function getCard (i, j)
-  return slots[i][j]:topCard()
-end
-
-function popCard (i, j)
-  return slots[i][j]:popCard()
 end
 
 function defineZone (i1, j1, i2, j2, color, hidden)
@@ -79,52 +54,26 @@ function hover (x, y)
   end
 end
 
-function drawCard ()
-  local deckslot  = slots[6][1]
-  local drawncard = deckslot:popCard()
-  if drawncard then
-    for i=1,7 do
-      local handslot = slots[6][1+i]
-      if not handslot:topCard() then
-        handslot:pushCard(drawncard)
-        return
-      end
-    end
-    deckslot:pushCard(drawncard)
-  end
-end
-
-function moveSelectedCards (i, j, pos)
-  for element,info in pairs(selection) do
-    if not pos then
-      slots[i][j]:pushCard(slots[info[1]][info[2]]:removeCard(element))
-    else
-      slots[i][j]:insertCard(slots[info[1]][info[2]]:removeCard(element), pos)
-    end
-    selection[element] = {i,j}
-  end
-end
-
 function keyAction (x, y, key)
-  local i, j = toBoardPosition(x,y)
+  local i, j = toBoardPosition(x, y, selection)
   if key == 'escape' then
     selection = {}
   elseif key == ' ' then -- move card
-    moveSelectedCards(i, j)
+    model.board.moveSelectedCards(selection, i, j)
     selection = {}
   elseif  key == 'd' then -- draw card(s)
     for i=1,(love.keyboard.isDown'lshift' and 7 or 1) do
-      drawCard()
+      model.board.drawCard()
     end
   elseif key == 'x' then
-    moveSelectedCards(5,1)
+    model.board.moveSelectedCards(selection, 5, 1)
     selection = {}
   elseif key == 'c' then
-    moveSelectedCards(6,1,1)
+    model.board.moveSelectedCards(selection, 6, 1, 1)
     selection = {}
   else
     for element,_ in pairs(selection) do
-      element:keyAction(i, j, key)
+      ui.Card.keyAction(key, element)
     end
   end
 end
@@ -150,9 +99,9 @@ function draw (graphics)
   if stats then
     ui.common.infoBox(graphics, 512-96, 384-48, 96*2, 96, {
       {'center', "Player 1's Wreckage:"},
-      {'center', slots[5][1]:totalSize().."/20"},
+      {'center', model.board.getSlot(5, 1):totalSize().."/20"},
       {'center', "Player 2's Wreckage:"},
-      {'center', slots[2][8]:totalSize().."/20"}
+      {'center', model.board.getSlot(2, 8):totalSize().."/20"}
     })
     stats = false
   elseif show then

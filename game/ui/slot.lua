@@ -1,15 +1,9 @@
 
-module ('ui', package.seeall)
+module ('ui.slot', package.seeall)
 
 require 'ui.card'
-require 'lux.object'
 
-Slot = lux.object.new {}
-
-Slot.__init = {
-}
-
-function Slot.click (selection, info, topcard)
+function click (selection, info, topcard)
   if not topcard then return end
   if selection[topcard] then
     selection[topcard] = nil
@@ -18,7 +12,7 @@ function Slot.click (selection, info, topcard)
   end
 end
 
-function Slot.draw (graphics, selection, slotdata, focus)
+function render (graphics, selection, slotdata, focus)
   if focus then
     graphics.setColor(255,100,100,255)
     graphics.rectangle('line', -64, -64, 127, 127)
@@ -27,7 +21,7 @@ function Slot.draw (graphics, selection, slotdata, focus)
     graphics.push()
     local d = math.min(#slotdata.stack-i-1, 2)
     graphics.translate(d*5, d*5)
-    ui.Card.draw(graphics, slotdata.hidden, selection, card)
+    ui.card.render(graphics, slotdata.hidden, selection, card)
     graphics.pop()
   end
   if #slotdata.stack > 1 then

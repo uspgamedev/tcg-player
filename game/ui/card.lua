@@ -1,12 +1,9 @@
 
-module ('ui', package.seeall)
+module ('ui.card', package.seeall)
 
 require 'control.card'
-require 'lux.object'
 
-Card = lux.object.new {}
-
-function Card.keyAction (key, carddata)
+function keyAction (key, carddata)
   if key == 't' then
     control.card.tapCard(carddata)
   elseif key == 'u' then
@@ -14,7 +11,7 @@ function Card.keyAction (key, carddata)
   end
 end
 
-function Card.draw (graphics, hidden, selection, carddata)
+function render (graphics, hidden, selection, carddata)
   if carddata.tapped then
     graphics.rotate(math.pi/2)
   end

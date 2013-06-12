@@ -21,7 +21,7 @@ function click (x, y, button)
   if button == 'l' then
     local i, j = toBoardPosition(x,y)
     local new_selection = love.keyboard.isDown 'lshift' and selection or {}
-    ui.Slot.click(new_selection, {i,j}, slots[i][j]:topCard())
+    ui.slot.click(new_selection, {i,j}, slots[i][j]:topCard())
     selection = new_selection
   end
 end
@@ -55,7 +55,7 @@ function keyAction (x, y, key)
     selection = {}
   else
     for element,_ in pairs(selection) do
-      ui.Card.keyAction(key, element)
+      ui.card.keyAction(key, element)
     end
   end
 end
@@ -73,7 +73,7 @@ function render (graphics)
         graphics.translate(64+(j-1)*128, 64+(i-1)*128)
         graphics.setColor(slot:getColor())
         graphics.rectangle('fill', -64, -64, 128, 128)
-        ui.Slot.draw(graphics, selection, slot, hoverpos[1] == i and hoverpos[2] == j)
+        ui.slot.render(graphics, selection, slot, hoverpos[1] == i and hoverpos[2] == j)
         graphics.pop()
       end
     end

@@ -3,6 +3,10 @@ module ('control.board', package.seeall)
 
 require 'model.board'
 
+function defineBoardZone (...)
+  model.board.defineZone(...)
+end
+
 function moveSelectedCards (selection, i, j)
   model.board.moveSelectedCards(selection, i, j)
 end
@@ -23,4 +27,9 @@ end
 
 function consumeSelectedCards (selection)
   model.board.moveSelectedCards(selection, 6, 1, 1)
+end
+
+function renderBoard (graphics)
+  local slots = model.board.getSlots()
+  ui.board.draw(graphics, slots)
 end

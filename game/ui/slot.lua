@@ -9,7 +9,8 @@ Slot = lux.object.new {}
 Slot.__init = {
   color     = {0,0,0,0},
   hidden    = false,
-  reference = nil
+  reference = nil,
+  focus     = false
 }
 
 function Slot:getColor ()
@@ -53,7 +54,7 @@ function Slot:draw (graphics, selection)
     graphics.push()
     local d = math.min(#self.reference.stack-i-1, 2)
     graphics.translate(d*5, d*5)
-    ui.Card.draw(graphics, self.hidden, selection, card)
+    ui.Card.draw(graphics, self.reference.hidden, selection, card)
     graphics.pop()
   end
   if #self.reference.stack > 1 then

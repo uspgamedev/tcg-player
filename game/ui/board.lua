@@ -62,7 +62,7 @@ function keyAction (x, y, key)
   elseif key == ' ' then -- move card
     control.board.moveSelectedCards(selection, i, j)
     selection = {}
-  elseif  key == 'd' then -- draw card(s)
+  elseif key == 'd' then -- draw card(s)
     if love.keyboard.isDown'lshift' then
       control.board.drawHand()
     else
@@ -85,7 +85,7 @@ function showStats ()
   stats = true
 end
 
-function draw (graphics)
+function draw (graphics, slots)
   for i=1,8 do
     for j=1,8 do
       local slot = slots[i][j]
@@ -94,7 +94,7 @@ function draw (graphics)
         graphics.translate(64+(j-1)*128, 64+(i-1)*128)
         graphics.setColor(slot:getColor())
         graphics.rectangle('fill', -64, -64, 128, 128)
-        slot:draw(graphics, selection)
+        ui.Slot:new{ reference = slot }:draw(graphics, selection)
         graphics.pop()
       end
     end

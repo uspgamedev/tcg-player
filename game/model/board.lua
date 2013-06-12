@@ -4,7 +4,7 @@ module ('model.board', package.seeall)
 require 'model.slot'
 require 'data.cards'
 
-local slots     = {}
+local slots = {}
 
 local function shuffleDeck (cards, i, j)
   local slot = slots[i][j]
@@ -32,8 +32,21 @@ function load (deck1)
   shuffleDeck(deck1.cards, 6, 1)
 end
 
+function defineZone (i1, j1, i2, j2, color, hidden)
+  for i=i1,i2 do
+    for j=j1,j2 do
+      slots[i][j]:setColor(color)
+      slots[i][j]:setHidden(hidden)
+    end
+  end
+end
+
 function getSlot (i, j)
   return slots[i][j]
+end
+
+function getSlots ()
+  return slots
 end
 
 function putCard (card, i, j)

@@ -31,5 +31,5 @@ end
 
 function renderBoard (graphics)
   local slots = model.board.getSlots()
-  ui.board.draw(graphics, slots)
+  ui.board.render(graphics, slots)
 end

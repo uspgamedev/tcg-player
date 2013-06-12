@@ -77,7 +77,7 @@ function showStats ()
   stats = true
 end
 
-function draw (graphics, slots)
+function render (graphics, slots)
   for i=1,8 do
     for j=1,8 do
       local slot = slots[i][j]

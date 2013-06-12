@@ -65,15 +65,19 @@ function update (new_slots)
 end
 
 function render (graphics)
-  for i=1,8 do
-    for j=1,8 do
-      local slot = slots[i][j]
+  for i,row in ipairs(slots) do
+    for j, slot in ipairs(row) do
       if slot then
         graphics.push()
         graphics.translate(64+(j-1)*128, 64+(i-1)*128)
         graphics.setColor(slot:getColor())
         graphics.rectangle('fill', -64, -64, 128, 128)
-        ui.slot.render(graphics, selection, slot, hoverpos[1] == i and hoverpos[2] == j)
+        ui.slot.render(
+          graphics,
+          selection,
+          slot,
+          hoverpos[1] == i and hoverpos[2] == j
+        )
         graphics.pop()
       end
     end

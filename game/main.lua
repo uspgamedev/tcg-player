@@ -9,7 +9,7 @@ function love.load ()
   data.cards.load 'cards.lua'
   local decks = lux.common.datafile('decks.lua', love.filesystem.load)
   model.board.load(decks.player1)
-  ui.board.load()
+  control.board.updateClientBoard()
   control.board.defineBoardZone(1,1,1,7, {50,50,110,255})
   control.board.defineBoardZone(6,2,6,8, {50,50,110,255})
   control.board.defineBoardZone(2,1,3,7, {90,55,40,255})
@@ -30,6 +30,7 @@ function love.keypressed (button)
 end
 
 function love.update (dt)
+  control.board.updateClientBoard()
   ui.board.hover(love.mouse.getPosition())
   if love.keyboard.isDown 'tab' then
     control.board.displayStats()

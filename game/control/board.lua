@@ -7,17 +7,6 @@ require 'model.board'
 local displaystack = nil
 local displaystats = false
 
-function displayStats ()
-  displaystats = true
-end
-
-function displayStack (pos)
-  local slot = model.board.getSlot(unpack(pos))
-  if not slot.hidden then
-    displaystack = slot
-  end
-end
-
 function defineBoardZone (...)
   model.board.defineZone(...)
 end
@@ -44,9 +33,24 @@ function consumeSelectedCards (selection)
   model.board.moveSelectedCards(selection, 6, 1, 1)
 end
 
+function updateClientBoard ()
+  ui.board.update(model.board.getSlots())
+end
+
+function displayStats ()
+  displaystats = true
+end
+
+function displayStack (pos)
+  local slot = model.board.getSlot(unpack(pos))
+  if not slot.hidden then
+    displaystack = slot
+  end
+end
+
 function renderBoard (graphics)
   local slots = model.board.getSlots()
-  ui.board.render(graphics, slots)
+  ui.board.render(graphics)
   if displaystats then
     ui.stats.showWreckage(
       graphics,

@@ -10,8 +10,7 @@ Slot.__init = {
   reference = nil
 }
 
-function Slot:click (selection, info)
-  local topcard = self.reference:topCard()
+function Slot.click (selection, info, topcard)
   if not topcard then return end
   if selection[topcard] then
     selection[topcard] = nil

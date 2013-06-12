@@ -11,8 +11,7 @@ require 'data.cards'
 
 local slots     = {}
 local selection = {}
-local show      = nil
-local stats     = false
+local hoverpos  = {1,1}
 
 function load ()
   for i=1,8 do
@@ -40,10 +39,9 @@ end
 
 function hover (x, y)
   local i, j = toBoardPosition(x, y)
-  local slot = slots[i][j]
-  slot:hover()
-  if love.mouse.isDown 'r' and not slot.hidden then
-    show = slot
+  hoverpos = {i,j}
+  if love.mouse.isDown 'r' then
+    control.board.displayStack(hoverpos)
   end
 end
 
@@ -73,10 +71,6 @@ function keyAction (x, y, key)
   end
 end
 
-function showStats ()
-  stats = true
-end
-
 function render (graphics, slots)
   for i=1,8 do
     for j=1,8 do
@@ -86,30 +80,22 @@ function render (graphics, slots)
         graphics.translate(64+(j-1)*128, 64+(i-1)*128)
         graphics.setColor(slot:getColor())
         graphics.rectangle('fill', -64, -64, 128, 128)
-        ui.Slot:new{ reference = slot }:draw(graphics, selection)
+        ui.Slot:new{ reference = slot }:draw(graphics, selection, hoverpos[1] == i and hoverpos[2] == j)
         graphics.pop()
       end
     end
   end
+  --[[
   if stats then
-    ui.stats.render(
+    ui.stats.showWreckage(
       graphics,
-      model.board.getSlot(5, 1):totalSize(),
-      model.board.getSlot(2, 8):totalSize()
+      slots[5][1]:totalSize(),
+      slots[2][8]:totalSize()
     )
     stats = false
-  elseif show then
-    local w = 96
-    local n = show.reference:getQuantity()
-    local x0 = 512+n*(w)
-    for i,card in show.reference:cards() do
-      ui.common.infoBox(
-        graphics,
-        x0-2*w-(i-1)*2*(w+1)-1, 384-128,
-        w*2, 256,
-        card:getInfo()
-      )
-    end
-    show = nil
+  elseif stackview then
+    ui.stats.showStack(graphics, stackview)
+    stackview = nil
   end
+  --]]
 end

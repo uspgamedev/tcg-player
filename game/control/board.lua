@@ -3,6 +3,21 @@ module ('control.board', package.seeall)
 
 require 'model.board'
 
+-- "Session" variables
+local displaystack = nil
+local displaystats = false
+
+function displayStats ()
+  displaystats = true
+end
+
+function displayStack (pos)
+  local slot = model.board.getSlot(unpack(pos))
+  if not slot.hidden then
+    displaystack = slot
+  end
+end
+
 function defineBoardZone (...)
   model.board.defineZone(...)
 end
@@ -32,4 +47,15 @@ end
 function renderBoard (graphics)
   local slots = model.board.getSlots()
   ui.board.render(graphics, slots)
+  if displaystats then
+    ui.stats.showWreckage(
+      graphics,
+      slots[5][1]:totalSize(),
+      slots[2][8]:totalSize()
+    )
+    displaystats = false
+  elseif displaystack then
+    ui.stats.showStack(graphics, displaystack)
+    displaystack = nil
+  end
 end

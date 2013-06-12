@@ -7,8 +7,7 @@ require 'lux.object'
 Slot = lux.object.new {}
 
 Slot.__init = {
-  reference = nil,
-  focus     = false
+  reference = nil
 }
 
 function Slot:click (selection, info)
@@ -21,12 +20,8 @@ function Slot:click (selection, info)
   end
 end
 
-function Slot:hover ()
-  self.focus = true
-end
-
-function Slot:draw (graphics, selection)
-  if self.focus then
+function Slot:draw (graphics, selection, focus)
+  if focus then
     graphics.setColor(255,100,100,255)
     graphics.rectangle('line', -64, -64, 127, 127)
     self.focus = false

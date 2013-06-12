@@ -7,28 +7,9 @@ require 'lux.object'
 Slot = lux.object.new {}
 
 Slot.__init = {
-  color     = {0,0,0,0},
-  hidden    = false,
   reference = nil,
   focus     = false
 }
-
-function Slot:getColor ()
-  return unpack(self.color)
-end
-
-function Slot:setColor (...)
-  local color = ...
-  if type(color) == 'table' then
-    self.color = color
-  else
-    self.color = { ... }
-  end
-end
-
-function Slot:setHidden (flag)
-  self.hidden = flag
-end
 
 function Slot:click (selection, info)
   local topcard = self.reference:topCard()

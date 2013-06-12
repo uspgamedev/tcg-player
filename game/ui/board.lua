@@ -5,6 +5,7 @@ require 'control.board'
 require 'model.board'
 require 'ui.slot'
 require 'ui.card'
+require 'ui.stats'
 require 'ui.common'
 require 'data.cards'
 
@@ -20,15 +21,6 @@ function load ()
       slots[i][j] = ui.Slot:new{
         reference = model.board.getSlot(i,j)
       }
-    end
-  end
-end
-
-function defineZone (i1, j1, i2, j2, color, hidden)
-  for i=i1,i2 do
-    for j=j1,j2 do
-      slots[i][j]:setColor(color)
-      slots[i][j]:setHidden(hidden)
     end
   end
 end
@@ -100,12 +92,11 @@ function draw (graphics, slots)
     end
   end
   if stats then
-    ui.common.infoBox(graphics, 512-96, 384-48, 96*2, 96, {
-      {'center', "Player 1's Wreckage:"},
-      {'center', model.board.getSlot(5, 1):totalSize().."/20"},
-      {'center', "Player 2's Wreckage:"},
-      {'center', model.board.getSlot(2, 8):totalSize().."/20"}
-    })
+    ui.stats.render(
+      graphics,
+      model.board.getSlot(5, 1):totalSize(),
+      model.board.getSlot(2, 8):totalSize()
+    )
     stats = false
   elseif show then
     local w = 96

@@ -7,7 +7,6 @@ require 'lux.object'
 Slot = lux.object.new {}
 
 Slot.__init = {
-  reference = nil
 }
 
 function Slot.click (selection, info, topcard)
@@ -19,22 +18,21 @@ function Slot.click (selection, info, topcard)
   end
 end
 
-function Slot:draw (graphics, selection, focus)
+function Slot.draw (graphics, selection, slotdata, focus)
   if focus then
     graphics.setColor(255,100,100,255)
     graphics.rectangle('line', -64, -64, 127, 127)
-    self.focus = false
   end
-  for i,card in self.reference:cards() do
+  for i,card in slotdata:cards() do
     graphics.push()
-    local d = math.min(#self.reference.stack-i-1, 2)
+    local d = math.min(#slotdata.stack-i-1, 2)
     graphics.translate(d*5, d*5)
-    ui.Card.draw(graphics, self.reference.hidden, selection, card)
+    ui.Card.draw(graphics, slotdata.hidden, selection, card)
     graphics.pop()
   end
-  if #self.reference.stack > 1 then
+  if #slotdata.stack > 1 then
     graphics.printf(
-      #self.reference.stack,
+      #slotdata.stack,
       -60, 64-2*graphics.getFont():getHeight(),
       120,
       'right'

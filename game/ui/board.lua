@@ -73,7 +73,7 @@ function render (graphics)
         graphics.translate(64+(j-1)*128, 64+(i-1)*128)
         graphics.setColor(slot:getColor())
         graphics.rectangle('fill', -64, -64, 128, 128)
-        ui.Slot:new{ reference = slot }:draw(graphics, selection, hoverpos[1] == i and hoverpos[2] == j)
+        ui.Slot.draw(graphics, selection, slot, hoverpos[1] == i and hoverpos[2] == j)
         graphics.pop()
       end
     end

@@ -3,7 +3,20 @@ require 'ui.board'
 require 'data.cards'
 require 'lux.common'
 
-function love.load ()
+local function getOptions (arg)
+  local opts = {}
+  for i,opt in ipairs(arg) do
+    if i > 1 then
+      local optname = string.gsub(opt, '%-%-', '')
+      opts[optname] = true
+      print(optname)
+    end
+  end
+  return opts
+end
+
+function love.load (arg)
+  local opts = getOptions(arg)
   love.graphics.setFont(love.graphics.newFont(10))
   love.graphics.setBackgroundColor(40,40,40,255)
   data.cards.load 'cards.lua'

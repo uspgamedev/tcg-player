@@ -28,8 +28,6 @@ function load (deck1)
       slots[i][j] = model.Slot:new{}
     end
   end
-  putCard(data.cards.make(deck1.vessel), 4, 1)
-  shuffleDeck(deck1.cards, 6, 1)
 end
 
 function defineZone (i1, j1, i2, j2, color, hidden)
@@ -39,6 +37,11 @@ function defineZone (i1, j1, i2, j2, color, hidden)
       slots[i][j]:setHidden(hidden)
     end
   end
+end
+
+function preparePlayerDeck (deck)
+  putCard(data.cards.make(deck.vessel), 4, 1)
+  shuffleDeck(deck.cards, 6, 1)
 end
 
 function getSlot (i, j)

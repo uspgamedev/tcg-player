@@ -1,5 +1,6 @@
 
 require 'ui.board'
+require 'control.board'
 require 'data.cards'
 require 'lux.common'
 
@@ -21,10 +22,10 @@ function love.load (arg)
   love.graphics.setBackgroundColor(40,40,40,255)
   data.cards.load 'cards.lua'
   local decks = lux.common.datafile('decks.lua', love.filesystem.load)
-  model.board.load()
+  control.board.newMatch()
   control.board.updateClientBoard()
   control.board.defineBoardZones()
-  model.board.preparePlayerDeck(decks.player1)
+  control.board.preparePlayerDeck(decks.player1)
 end
 
 function love.mousereleased (x, y, button)

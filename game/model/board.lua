@@ -21,7 +21,7 @@ local function shuffleDeck (cards, i, j)
   end
 end
 
-function load (deck1)
+function initialize ()
   for i=1,8 do
     slots[i] = {}
     for j=1,8 do

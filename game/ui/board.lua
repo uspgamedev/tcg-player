@@ -2,7 +2,6 @@
 module ('ui.board', package.seeall)
 
 require 'control.board'
-require 'model.board'
 require 'ui.slot'
 require 'ui.card'
 require 'ui.stats'

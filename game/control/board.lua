@@ -2,10 +2,14 @@
 module ('control.board', package.seeall)
 
 require 'model.board'
+require 'lux.common'
 
 -- "Session" variables
 local displaystack = nil
 local displaystats = false
+
+function initialize ()
+end
 
 function newMatch ()
   model.board.initialize()

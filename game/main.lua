@@ -1,6 +1,7 @@
 
 require 'ui.board'
-require 'control.board'
+require 'control'
+require 'net'
 require 'data.cards'
 require 'lux.common'
 
@@ -8,6 +9,7 @@ local function getOptions (arg)
   local opts = {}
   for i,opt in ipairs(arg) do
     if i > 1 then
+      -- FIXME
       local optname = string.gsub(opt, '%-%-', '')
       opts[optname] = true
       print(optname)

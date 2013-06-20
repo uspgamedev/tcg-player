@@ -44,5 +44,7 @@ function send (data)
 end
 
 function receive ()
-  return unserialize(msg)
+  local answer = unserialize(msg)
+  msg = nil
+  return answer
 end

@@ -25,9 +25,9 @@ function love.load (arg)
   data.cards.load 'cards.lua'
   local decks = lux.common.datafile('decks.lua', love.filesystem.load)
   control.board.newMatch()
-  control.board.updateClientBoard()
   control.board.defineBoardZones()
   control.board.preparePlayerDeck(decks.player1)
+  control.board.updateClientBoard()
 end
 
 function love.mousereleased (x, y, button)

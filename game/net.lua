@@ -39,11 +39,16 @@ local function unserialize (strdata)
   return assert(loadstring("return "..strdata)) ()
 end
 
-function send (id, data)
+function sendto (id, data)
+  if not data then
+    return function (data)
+      return sendto(id, data)
+    end
+  end
   msg[id] = serialize(data)
 end
 
-function receive (id)
+function receivefrom (id)
   local answer = unserialize(msg[id])
   msg[id] = nil
   return answer

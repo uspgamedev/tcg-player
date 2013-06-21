@@ -2,7 +2,9 @@
 require 'ui.board'
 require 'control'
 require 'net'
+require 'client'
 require 'data.cards'
+require 'data.decks'
 require 'lux.common'
 
 local function getOptions (arg)
@@ -20,13 +22,12 @@ end
 
 function love.load (arg)
   local opts = getOptions(arg)
-  love.graphics.setFont(love.graphics.newFont(10))
-  love.graphics.setBackgroundColor(40,40,40,255)
   data.cards.load 'cards.lua'
-  local decks = lux.common.datafile('decks.lua', love.filesystem.load)
+  data.decks.load 'decks.lua'
+  client.load(love.graphics)
   control.board.newMatch()
   control.board.defineBoardZones()
-  control.board.preparePlayerDeck(decks.player1)
+  control.board.preparePlayerDeck(data.decks.get 'player1')
   control.board.updateClientBoard()
 end
 

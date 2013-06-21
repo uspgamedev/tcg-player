@@ -1,7 +1,7 @@
 
 module ('net', package.seeall)
 
-local msg
+local msg = {}
 
 local serializers = {}
 
@@ -39,12 +39,12 @@ local function unserialize (strdata)
   return assert(loadstring("return "..strdata)) ()
 end
 
-function send (data)
-  msg = serialize(data)
+function send (id, data)
+  msg[id] = serialize(data)
 end
 
-function receive ()
-  local answer = unserialize(msg)
-  msg = nil
+function receive (id)
+  local answer = unserialize(msg[id])
+  msg[id] = nil
   return answer
 end

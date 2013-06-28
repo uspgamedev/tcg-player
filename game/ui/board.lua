@@ -50,11 +50,17 @@ function keyAction (x, y, key)
       action      = love.keyboard.isDown 'lshift' and 'drawHand' or 'drawCard'
     }
   elseif key == 'x' then
-    control.board.destroySelectedCards(selection)
-    selection = {}
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = 'destroySelectedCards',
+      selection   = selection
+    }
   elseif key == 'c' then
-    control.board.consumeSelectedCards(selection)
-    selection = {}
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = 'consumeSelectedCards',
+      selection   = selection
+    }
   else
     for element,_ in pairs(selection) do
       ui.card.keyAction(key, element)

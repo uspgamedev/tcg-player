@@ -29,12 +29,12 @@ function drawHand ()
   end
 end
 
-function destroySelectedCards (selection)
-  model.board.moveSelectedCards(selection, 5, 1)
+function destroySelectedCards (params)
+  model.board.moveSelectedCards(params.selection, 5, 1)
 end
 
-function consumeSelectedCards (selection)
-  model.board.moveSelectedCards(selection, 6, 1, 1)
+function consumeSelectedCards (params)
+  model.board.moveSelectedCards(params.selection, 6, 1, 1)
 end
 
 function updateClientBoard ()

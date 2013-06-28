@@ -3,6 +3,7 @@ require 'ui.board'
 require 'control'
 require 'net'
 require 'client'
+require 'server'
 require 'data.cards'
 require 'data.decks'
 require 'lux.common'
@@ -24,9 +25,8 @@ function love.load (arg)
   local opts = getOptions(arg)
   data.cards.load 'cards.lua'
   data.decks.load 'decks.lua'
+  server.load()
   client.load(love.graphics)
-  control.board.newMatch()
-  control.board.defineBoardZones()
   control.board.preparePlayerDeck(data.decks.get 'player1')
   control.board.updateClientBoard()
 end

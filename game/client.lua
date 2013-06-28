@@ -1,9 +1,9 @@
 
 module ('client', package.seeall)
 
-local net         = require 'net'
-local data_decks  = require 'data.decks'
-local board       = require 'ui.board'
+local net   = require 'net'
+local decks = require 'data.decks'
+local board = require 'ui.board'
 
 function load (graphics)
   graphics.setFont(love.graphics.newFont(10))
@@ -11,13 +11,13 @@ function load (graphics)
   net.sendto 'server' {
     controller = 'board',
     action = 'newMatch',
-    playerdeck = data_decks.get 'player1'
+    playerdeck = decks.get 'player1'
   }
 end
 
 function update ()
-  local response = net.receivefrom 'server'
-  if response then
+  local response = net.receivefrom 'client'
+  if response and response.action == 'updateBoard' then
     board.update(response.slots)
   end
 end

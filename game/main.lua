@@ -27,8 +27,6 @@ function love.load (arg)
   data.decks.load 'decks.lua'
   server.load()
   client.load(love.graphics)
-  control.board.preparePlayerDeck(data.decks.get 'player1')
-  control.board.updateClientBoard()
 end
 
 function love.mousereleased (x, y, button)
@@ -41,7 +39,8 @@ function love.keypressed (button)
 end
 
 function love.update (dt)
-  control.board.updateClientBoard()
+  server.update()
+  client.update()
   ui.board.hover(love.mouse.getPosition())
   if love.keyboard.isDown 'tab' then
     control.board.displayStats()

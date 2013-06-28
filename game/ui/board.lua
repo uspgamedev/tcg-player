@@ -61,6 +61,11 @@ end
 
 function update (new_slots)
   slots = new_slots
+  for i,row in ipairs(new_slots) do
+    for j,slot in ipairs(row) do
+      slots[i][j] = model.Slot:new(slot)
+    end
+  end
 end
 
 function render (graphics)

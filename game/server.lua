@@ -1,7 +1,8 @@
 
 module ('server', package.seeall)
 
-local board = require 'model.board'
+local board   = require 'model.board'
+local control = require 'control'
 
 local function defineBoardZones ()
   board.initialize()
@@ -20,5 +21,12 @@ function load ()
 end
 
 function update ()
-
+  local request = net.receivefrom 'server'
+  if request then
+    control[request.controller][request.action] (request)
+    net.sendto 'client' {
+      action = 'updateBoard',
+      slots = board.getSlots()
+    }
+  end
 end

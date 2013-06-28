@@ -45,11 +45,10 @@ function keyAction (x, y, key)
       targetpos   = {i,j}
     }
   elseif key == 'd' then -- draw card(s)
-    if love.keyboard.isDown'lshift' then
-      control.board.drawHand()
-    else
-      control.board.drawCard()
-    end
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = love.keyboard.isDown 'lshift' and 'drawHand' or 'drawCard'
+    }
   elseif key == 'x' then
     control.board.destroySelectedCards(selection)
     selection = {}

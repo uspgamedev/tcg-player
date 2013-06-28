@@ -36,7 +36,7 @@ function serializers.table (t)
 end
 
 local function unserialize (strdata)
-  return assert(loadstring("return "..strdata)) ()
+  return strdada and assert(loadstring("return "..strdata)) ()
 end
 
 function sendto (id, data)

@@ -3,12 +3,16 @@ module ('ui.card', package.seeall)
 
 require 'control.card'
 
-function keyAction (key, carddata)
-  if key == 't' then
-    control.card.tapCard(carddata)
-  elseif key == 'u' then
-    control.card.untapCard(carddata)
-  end
+local net = require 'net'
+
+function keyAction (key, cardID)
+  local action = (key == 't') and 'tapCard' or ((key == 'u') and 'untapCard')
+  if not action then return end
+  net.sendto 'server' {
+    controller  = 'card',
+    action      = action,
+    cardID      = cardID
+  }
 end
 
 function render (graphics, hidden, selection, carddata)

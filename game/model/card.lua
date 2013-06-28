@@ -8,6 +8,10 @@ Card = lux.object.new {
   info = nil
 }
 
+function Card:getID ()
+  return self.id 
+end
+
 function Card:tap ()
   self.tapped = true
 end

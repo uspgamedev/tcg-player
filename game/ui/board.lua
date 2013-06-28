@@ -8,6 +8,8 @@ require 'ui.stats'
 require 'ui.common'
 require 'data.cards'
 
+local net       = require 'net'
+
 local slots     = {}
 local selection = {}
 local hoverpos  = {1,1}
@@ -73,6 +75,10 @@ function update (new_slots)
   for i,row in ipairs(new_slots) do
     for j,slot in ipairs(row) do
       slots[i][j] = model.Slot:new(slot)
+      for k,card in slot:cards() do
+        -- FIXME: encapsulation breakout
+        slot.stack[k] = model.Card:new(card)
+      end
     end
   end
   selection = {}

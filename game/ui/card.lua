@@ -21,7 +21,7 @@ function render (graphics, hidden, selection, carddata)
   graphics.rectangle('fill', -32, -48, 64, 96)
 
   -- border
-  if selection[carddata] then
+  if selection[carddata.id] then
     graphics.setColor(100,180,140,255)
   else
     graphics.setColor(0,0,0,255)

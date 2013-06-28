@@ -48,15 +48,15 @@ function Slot:popCard ()
   return table.remove(self.stack)
 end
 
-function Slot:removeCard (card)
+function Slot:removeCard (cardID)
   local index
   for i,stacked in ipairs(self.stack) do
-    if stacked == card then
+    if stacked.id == cardID then
       index = i
       break
     end
   end
-  return table.remove(self.stack, index)
+  return index and table.remove(self.stack, index)
 end
 
 function Slot:topCard ()

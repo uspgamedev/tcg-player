@@ -38,8 +38,12 @@ function keyAction (x, y, key)
   if key == 'escape' then
     selection = {}
   elseif key == ' ' then -- move card
-    control.board.moveSelectedCards(selection, i, j)
-    selection = {}
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = 'moveSelectedCards',
+      selection   = selection,
+      targetpos   = {i,j}
+    }
   elseif key == 'd' then -- draw card(s)
     if love.keyboard.isDown'lshift' then
       control.board.drawHand()
@@ -66,6 +70,7 @@ function update (new_slots)
       slots[i][j] = model.Slot:new(slot)
     end
   end
+  selection = {}
 end
 
 function render (graphics)

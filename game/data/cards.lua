@@ -17,6 +17,13 @@ function load (cardfile)
   end
 end
 
+local nextID = 1
+
 function make (name)
-  return model.Card:new{ info = cardsinfo[name] }
+  local new_card = model.Card:new {
+    id = nextID,
+    info = cardsinfo[name]
+  }
+  nextID = nextID + 1
+  return new_card
 end

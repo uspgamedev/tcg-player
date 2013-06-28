@@ -11,16 +11,12 @@ local displaystats = false
 function initialize ()
 end
 
-local function preparePlayerDeck (deck)
-  model.board.preparePlayerDeck(deck)
-end
-
 function newMatch (params)
-  preparePlayerDeck(params.playerdeck)
+  model.board.preparePlayerDeck(params.playerdeck)
 end
 
-function moveSelectedCards (selection, i, j)
-  model.board.moveSelectedCards(selection, i, j)
+function moveSelectedCards (params)
+  model.board.moveSelectedCards(params.selection, unpack(params.targetpos))
 end
 
 function drawCard ()

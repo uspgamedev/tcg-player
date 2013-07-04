@@ -21,9 +21,16 @@ function load ()
 end
 
 function update ()
-  local request = net.receivefrom 'server'
-  if request then
-    control[request.controller][request.action] (request)
+  local request
+  local needs_update = false
+  repeat
+    request = net.receivefrom 'server'
+    if request then
+      needs_update = true
+      control[request.controller][request.action] (request)
+    end
+  until not request
+  if needs_update then
     net.sendto 'client' {
       action = 'updateBoard',
       slots = board.getSlots()

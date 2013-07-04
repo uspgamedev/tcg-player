@@ -16,10 +16,13 @@ function load (graphics)
 end
 
 function update ()
-  local response = net.receivefrom 'client'
-  if response and response.action == 'updateBoard' then
-    board.update(response.slots)
-  end
+  local response
+  repeat
+    response = net.receivefrom 'client'
+    if response and response.action == 'updateBoard' then
+      board.update(response.slots)
+    end
+  until not response
 end
 
 function draw (graphics)

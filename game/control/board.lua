@@ -6,7 +6,6 @@ require 'lux.common'
 
 -- "Session" variables
 local displaystack = nil
-local displaystats = false
 
 function initialize ()
 end
@@ -41,10 +40,6 @@ function updateClientBoard ()
   ui.board.update(model.board.getSlots())
 end
 
-function displayStats ()
-  displaystats = true
-end
-
 function displayStack (pos)
   local slot = model.board.getSlot(unpack(pos))
   if not slot.hidden then
@@ -55,14 +50,7 @@ end
 function renderBoard (graphics)
   local slots = model.board.getSlots()
   ui.board.render(graphics)
-  if displaystats then
-    ui.stats.showWreckage(
-      graphics,
-      slots[5][1]:totalSize(),
-      slots[2][8]:totalSize()
-    )
-    displaystats = false
-  elseif displaystack then
+  if displaystack then
     ui.stats.showStack(graphics, displaystack)
     displaystack = nil
   end

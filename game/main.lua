@@ -8,8 +8,9 @@ require 'data.cards'
 require 'data.decks'
 require 'lux.common'
 
+local opts = {}
+
 local function getOptions (arg)
-  local opts = {}
   for i,opt in ipairs(arg) do
     if i > 1 then
       -- FIXME

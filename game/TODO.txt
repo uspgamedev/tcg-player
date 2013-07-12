@@ -2,8 +2,6 @@
 - CARDS
 - DECKS
 - Networking
-  - Display stats should be in main?
-  - Display stack hould be in main?
   - Card objects should only have their name and ID.
   - Implantar sockets?
   - Duplicar model

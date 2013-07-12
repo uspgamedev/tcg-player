@@ -14,7 +14,7 @@ local slots     = {}
 local selection = {}
 local hoverpos  = {1,1}
 
-local function toBoardPosition (x, y)
+function toBoardPosition (x, y)
   return math.floor((y)/128)+1, math.floor((x)/128)+1
 end
 

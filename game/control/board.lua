@@ -39,19 +39,3 @@ end
 function updateClientBoard ()
   ui.board.update(model.board.getSlots())
 end
-
-function displayStack (pos)
-  local slot = model.board.getSlot(unpack(pos))
-  if not slot.hidden then
-    displaystack = slot
-  end
-end
-
-function renderBoard (graphics)
-  local slots = model.board.getSlots()
-  ui.board.render(graphics)
-  if displaystack then
-    ui.stats.showStack(graphics, displaystack)
-    displaystack = nil
-  end
-end

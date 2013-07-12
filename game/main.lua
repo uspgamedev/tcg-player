@@ -9,7 +9,6 @@ require 'data.decks'
 require 'lux.common'
 
 local opts = {}
-local displaystats = false
 
 local function getOptions (arg)
   for i,opt in ipairs(arg) do
@@ -43,21 +42,8 @@ end
 function love.update (dt)
   server.update()
   client.update()
-  ui.board.hover(love.mouse.getPosition())
-  if love.keyboard.isDown 'tab' then
-    displaystats = true
-  end
 end
 
 function love.draw ()
-  control.board.renderBoard(love.graphics)
-  local slots = model.board.getSlots()
-  if displaystats then
-    ui.stats.showWreckage(
-      love.graphics,
-      slots[5][1]:totalSize(),
-      slots[2][8]:totalSize()
-    )
-    displaystats = false
-  end
+  client.draw(love.graphics)
 end

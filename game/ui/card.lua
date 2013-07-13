@@ -34,7 +34,7 @@ function render (graphics, hidden, selection, carddata)
 
   -- card text
   graphics.setColor(100,140,180,255)
-  if not hidden and carddata.info then
-    graphics.printf(carddata.info.name, -32+2, -48+2, 64-4, 'center')
+  if not hidden then
+    graphics.printf(carddata:getInfo().name, -32+2, -48+2, 64-4, 'center')
   end
 end

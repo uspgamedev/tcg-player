@@ -21,7 +21,7 @@ function showStack (graphics, slot)
       graphics,
       x0-2*w-(i-1)*2*(w+1)-1, 384-128,
       w*2, 256,
-      card:getInfo()
+      card:getFormattedInfo()
     )
   end
 end

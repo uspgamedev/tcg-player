@@ -21,9 +21,13 @@ local nextID = 1
 
 function make (name)
   local new_card = model.Card:new {
-    id = nextID,
-    info = cardsinfo[name]
+    id    = nextID,
+    name  = name
   }
   nextID = nextID + 1
   return new_card
+end
+
+function getCardInfo (name)
+  return cardsinfo[name]
 end

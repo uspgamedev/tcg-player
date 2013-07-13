@@ -16,7 +16,6 @@ local function getOptions (arg)
       -- FIXME
       local optname = string.gsub(opt, '%-%-', '')
       opts[optname] = true
-      print(optname)
     end
   end
   return opts
@@ -26,7 +25,9 @@ function love.load (arg)
   local opts = getOptions(arg)
   data.cards.load 'cards.lua'
   data.decks.load 'decks.lua'
-  server.load()
+  if opts.server then
+    server.load()
+  end
   client.load(love.graphics)
 end
 

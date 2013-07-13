@@ -2,6 +2,7 @@
 module ('net', package.seeall)
 
 require 'lux.list'
+require 'socket'
 
 local msg = {}
 
@@ -52,6 +53,8 @@ local function pop (id)
   return msg[id] and msg[id]:pop_front()
 end
 
+--------------------------------------------------------------------------------
+
 function sendto (id, data)
   if not data then
     return function (data)
@@ -64,3 +67,4 @@ end
 function receivefrom (id)
   return unserialize(pop(id))
 end
+

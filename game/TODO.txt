@@ -2,6 +2,5 @@
 - CARDS
 - DECKS
 - Networking
-  - Card objects should only have their name and ID.
   - Implantar sockets?
   - Duplicar model

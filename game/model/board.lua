@@ -5,6 +5,7 @@ require 'model.slot'
 require 'data.cards'
 
 local slots     = {}
+local cardrefs  = {}
 
 local function shuffleDeck (cards, i, j)
   local slot = slots[i][j]
@@ -18,22 +19,43 @@ local function shuffleDeck (cards, i, j)
     local card =
       data.cards.make(table.remove(cardpool, math.random(1,#cardpool)))
     slot:pushCard(card)
+    cardrefs[card:getID()] = card
   end
 end
 
-function load (deck1)
+function initialize ()
   for i=1,8 do
     slots[i] = {}
     for j=1,8 do
       slots[i][j] = model.Slot:new{}
     end
   end
-  putCard(data.cards.make(deck1.vessel), 4, 1)
-  shuffleDeck(deck1.cards, 6, 1)
+end
+
+function findCard (id)
+  return cardrefs[id]
+end
+
+function defineZone (i1, j1, i2, j2, color, hidden)
+  for i=i1,i2 do
+    for j=j1,j2 do
+      slots[i][j]:setColor(color)
+      slots[i][j]:setHidden(hidden)
+    end
+  end
+end
+
+function preparePlayerDeck (deck)
+  putCard(data.cards.make(deck.vessel), 4, 1)
+  shuffleDeck(deck.cards, 6, 1)
 end
 
 function getSlot (i, j)
   return slots[i][j]
+end
+
+function getSlots ()
+  return slots
 end
 
 function putCard (card, i, j)

@@ -1,10 +1,16 @@
 
 module ('control.card', package.seeall)
 
-function tapCard (card)
-  card:tap()
+local board = require 'model.board'
+
+function initialize ()
+  decks = lux.common.datafile('decks.lua', love.filesystem.load)
 end
 
-function untapCard (card)
-  card:untap()
+function tapCard (params)
+  board.findCard(params.cardID):tap()
+end
+
+function untapCard (params)
+  board.findCard(params.cardID):untap()
 end

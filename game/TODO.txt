@@ -1,4 +1,6 @@
 
-- Move cards to bottom of slot stack
 - CARDS
 - DECKS
+- Networking
+  - Implantar sockets?
+  - Duplicar model

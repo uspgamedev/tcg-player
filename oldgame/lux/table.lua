@@ -23,16 +23,11 @@
 --
 --]]
 
---- Module containing information regarding this LUX Project distribution.
-module 'lux.info'
+require "lux.object"
 
-local major = 0
-local minor = 4
-local patch = 2
-
---- LUX's version.
--- @return A string with the current LUX version.
-function version ()
-  return major..'.'..minor..'.'..patch
-end
+--- LUX's table class module.
+-- A table object is just like any table, with the addition that it has
+-- methods all corresponding to all the functions from the standard
+-- <code>table</code> module.
+module ("lux.table", lux.object.inherit(table))
 

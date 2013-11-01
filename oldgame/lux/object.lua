@@ -44,19 +44,17 @@ module ("lux.object", package.seeall) do
   -- Recursive initialization.
   local function init (obj, super)
     if not super then return end
+    init(obj, super:__super())
     if super.__init then
-      if type(super.__init) == "table" then
+      local init_type = type(super.__init)
+      if init_type == "function" then
+        super.__init(obj)
+      elseif init_type == "table" then
         for k,v in pairs(super.__init) do
           if not rawget(obj, k) then
             obj[k] = clone(v)
           end
         end
-      end
-    end
-    init(obj, super:__super())
-    if super.__construct then
-      if type(super.__construct) == "function" then
-        super.__construct(obj)
       end
     end
   end

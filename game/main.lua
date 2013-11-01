@@ -1,18 +1,31 @@
 
-require 'base.Component'
+require 'component.Layout'
+require 'component.Board'
 
-local MainScene = base.Component:new{}
+local MainScene = component.Layout:new{}
+local W, H
+local board
 
 function MainScene:load ()
   love.graphics.setBackgroundColor(100,100,100)
+
+  W = love.graphics.getWidth()
+  H = love.graphics.getHeight()
+
+  board = component.Board:new{
+    pos = lux.geom.point:new {0, H/2},
+    size = lux.geom.point:new {W, H/2},
+    cards = {}  
+  }
+
+  self:addChild(board)
 end
 
-function MainScene:update (dt)
-  -- body
+function love.keypressed (button)
+  if button == ' ' then
+    table.insert(board.cards, {})
+  end
 end
 
-function MainScene:draw ()
-  -- body
-end
 
 MainScene:new{}:attach(love)

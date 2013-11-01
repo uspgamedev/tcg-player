@@ -1,12 +1,17 @@
 
 module ('model', package.seeall)
 
+require 'data.cards'
 require 'lux.object'
 
 Card = lux.object.new {
-  tapped = false,
-  info = nil
+  tapped  = false,
+  name    = ""
 }
+
+function Card:getID ()
+  return self.id 
+end
 
 function Card:tap ()
   self.tapped = true
@@ -21,19 +26,24 @@ function Card:toggleTap ()
 end
 
 function Card:getInfo ()
-  local info = {
+  return data.cards.getCardInfo(self.name)
+end
+
+function Card:getFormattedInfo ()
+  local info = self:getInfo()
+  local formatted = {
     {
       'right',
-      "{"..(self.info.cost or '').."} -- ["..(self.info.size or '').."]"
+      "{"..(info.cost or '').."} -- ["..(info.size or '').."]"
     },
-    {'center', self.info.name},
+    {'center', info.name},
     {'center', "----------------------"},
-    {'center', "("..self.info.type..(self.tapped and " - tapped" or "")..")"},
+    {'center', "("..info.type..(self.tapped and " - tapped" or "")..")"},
     {'center', "----------------------"},
     {'center', ""},
   }
-  for _,rule in ipairs(self.info.rules) do
-    table.insert(info, {'left', rule})
+  for _,rule in ipairs(info.rules) do
+    table.insert(formatted, {'left', rule})
   end
-  return info
+  return formatted
 end

@@ -3,12 +3,16 @@ module ('ui.card', package.seeall)
 
 require 'control.card'
 
-function keyAction (key, carddata)
-  if key == 't' then
-    control.card.tapCard(carddata)
-  elseif key == 'u' then
-    control.card.untapCard(carddata)
-  end
+local net = require 'net'
+
+function keyAction (key, cardID)
+  local action = (key == 't') and 'tapCard' or ((key == 'u') and 'untapCard')
+  if not action then return end
+  net.sendto 'server' {
+    controller  = 'card',
+    action      = action,
+    cardID      = cardID
+  }
 end
 
 function render (graphics, hidden, selection, carddata)
@@ -21,7 +25,7 @@ function render (graphics, hidden, selection, carddata)
   graphics.rectangle('fill', -32, -48, 64, 96)
 
   -- border
-  if selection[carddata] then
+  if selection[carddata.id] then
     graphics.setColor(100,180,140,255)
   else
     graphics.setColor(0,0,0,255)
@@ -30,7 +34,7 @@ function render (graphics, hidden, selection, carddata)
 
   -- card text
   graphics.setColor(100,140,180,255)
-  if not hidden and carddata.info then
-    graphics.printf(carddata.info.name, -32+2, -48+2, 64-4, 'center')
+  if not hidden then
+    graphics.printf(carddata:getInfo().name, -32+2, -48+2, 64-4, 'center')
   end
 end

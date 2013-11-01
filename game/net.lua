@@ -1,6 +1,9 @@
 
 module ('net', package.seeall)
 
+require 'lux.list'
+require 'socket'
+
 local msg = {}
 
 local serializers = {}
@@ -36,8 +39,21 @@ function serializers.table (t)
 end
 
 local function unserialize (strdata)
-  return strdada and assert(loadstring("return "..strdata)) ()
+  return strdata and assert(loadstring("return "..strdata)) ()
 end
+
+local function push (id, data)
+  if not msg[id] then
+    msg[id] = lux.list:new{}
+  end
+  msg[id]:push_back(data)
+end
+
+local function pop (id)
+  return msg[id] and msg[id]:pop_front()
+end
+
+--------------------------------------------------------------------------------
 
 function sendto (id, data)
   if not data then
@@ -45,11 +61,10 @@ function sendto (id, data)
       return sendto(id, data)
     end
   end
-  msg[id] = serialize(data)
+  push(id, serialize(data))
 end
 
 function receivefrom (id)
-  local answer = unserialize(msg[id])
-  msg[id] = nil
-  return answer
+  return unserialize(pop(id))
 end
+

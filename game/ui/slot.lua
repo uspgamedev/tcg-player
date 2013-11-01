@@ -5,10 +5,11 @@ require 'ui.card'
 
 function click (selection, info, topcard)
   if not topcard then return end
-  if selection[topcard] then
-    selection[topcard] = nil
+  local id = topcard:getID()
+  if selection[id] then
+    selection[id] = nil
   else
-    selection[topcard] = info
+    selection[id] = info
   end
 end
 

@@ -8,11 +8,13 @@ require 'ui.stats'
 require 'ui.common'
 require 'data.cards'
 
+local net       = require 'net'
+
 local slots     = {}
 local selection = {}
 local hoverpos  = {1,1}
 
-local function toBoardPosition (x, y)
+function toBoardPosition (x, y)
   return math.floor((y)/128)+1, math.floor((x)/128)+1
 end
 
@@ -38,20 +40,29 @@ function keyAction (x, y, key)
   if key == 'escape' then
     selection = {}
   elseif key == ' ' then -- move card
-    control.board.moveSelectedCards(selection, i, j)
-    selection = {}
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = 'moveSelectedCards',
+      selection   = selection,
+      targetpos   = {i,j}
+    }
   elseif key == 'd' then -- draw card(s)
-    if love.keyboard.isDown'lshift' then
-      control.board.drawHand()
-    else
-      control.board.drawCard()
-    end
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = love.keyboard.isDown 'lshift' and 'drawHand' or 'drawCard'
+    }
   elseif key == 'x' then
-    control.board.destroySelectedCards(selection)
-    selection = {}
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = 'destroySelectedCards',
+      selection   = selection
+    }
   elseif key == 'c' then
-    control.board.consumeSelectedCards(selection)
-    selection = {}
+    net.sendto 'server' {
+      controller  = 'board',
+      action      = 'consumeSelectedCards',
+      selection   = selection
+    }
   else
     for element,_ in pairs(selection) do
       ui.card.keyAction(key, element)
@@ -61,6 +72,16 @@ end
 
 function update (new_slots)
   slots = new_slots
+  for i,row in ipairs(new_slots) do
+    for j,slot in ipairs(row) do
+      slots[i][j] = model.Slot:new(slot)
+      for k,card in slot:cards() do
+        -- FIXME: encapsulation breakout
+        slot.stack[k] = model.Card:new(card)
+      end
+    end
+  end
+  selection = {}
 end
 
 function render (graphics)

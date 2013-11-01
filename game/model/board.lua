@@ -4,7 +4,8 @@ module ('model.board', package.seeall)
 require 'model.slot'
 require 'data.cards'
 
-local slots = {}
+local slots     = {}
+local cardrefs  = {}
 
 local function shuffleDeck (cards, i, j)
   local slot = slots[i][j]
@@ -18,6 +19,7 @@ local function shuffleDeck (cards, i, j)
     local card =
       data.cards.make(table.remove(cardpool, math.random(1,#cardpool)))
     slot:pushCard(card)
+    cardrefs[card:getID()] = card
   end
 end
 
@@ -28,6 +30,10 @@ function initialize ()
       slots[i][j] = model.Slot:new{}
     end
   end
+end
+
+function findCard (id)
+  return cardrefs[id]
 end
 
 function defineZone (i1, j1, i2, j2, color, hidden)

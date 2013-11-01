@@ -2,3 +2,5 @@
 - CARDS
 - DECKS
 - Networking
+  - Implantar sockets?
+  - Duplicar model

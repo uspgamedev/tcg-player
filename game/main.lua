@@ -8,14 +8,14 @@ require 'data.cards'
 require 'data.decks'
 require 'lux.common'
 
+local opts = {}
+
 local function getOptions (arg)
-  local opts = {}
   for i,opt in ipairs(arg) do
     if i > 1 then
       -- FIXME
       local optname = string.gsub(opt, '%-%-', '')
       opts[optname] = true
-      print(optname)
     end
   end
   return opts
@@ -25,10 +25,10 @@ function love.load (arg)
   local opts = getOptions(arg)
   data.cards.load 'cards.lua'
   data.decks.load 'decks.lua'
-  server.load()
+  if opts.server then
+    server.load()
+  end
   client.load(love.graphics)
-  control.board.preparePlayerDeck(data.decks.get 'player1')
-  control.board.updateClientBoard()
 end
 
 function love.mousereleased (x, y, button)
@@ -41,13 +41,10 @@ function love.keypressed (button)
 end
 
 function love.update (dt)
-  control.board.updateClientBoard()
-  ui.board.hover(love.mouse.getPosition())
-  if love.keyboard.isDown 'tab' then
-    control.board.displayStats()
-  end
+  server.update()
+  client.update()
 end
 
 function love.draw ()
-  control.board.renderBoard(love.graphics)
+  client.draw(love.graphics)
 end

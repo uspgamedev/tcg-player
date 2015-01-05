@@ -23,7 +23,7 @@ end
 
 function love.keypressed (button)
   if button == ' ' then
-    table.insert(board.cards, {})
+    table.insert(board.cards, "WAT")
   end
 end
 
